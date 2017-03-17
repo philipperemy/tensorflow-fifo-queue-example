@@ -1,5 +1,6 @@
 # Tensorflow FIFO Queue example
-### Example on how to use a Tensorflow Queue to feed data to your models. Compatible with Tensorflow 1.x. Please upgrade if you have Tensorflow 0.x.
+### Example on how to use a Tensorflow Queue to feed data to your models. 
+Compatible with Tensorflow 1.x. Please upgrade if you have Tensorflow 0.x.
 
 <div align="center">
   <img src="https://www.tensorflow.org/images/tf_logo_transp.png" width="200"><br><br>
