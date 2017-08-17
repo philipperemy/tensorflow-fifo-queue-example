@@ -1,6 +1,9 @@
 from __future__ import print_function
 
+import time
+
 import tensorflow as tf
+
 from data import DataGenerator
 
 
@@ -23,9 +26,10 @@ def main():
     threads = reader.start_threads(sess)
     net = define_net(input_batch)
     queue_size = reader.queue_size
-    for step in range(100):
+    for step in range(10000):
         print('size queue =', queue_size.eval(session=sess))
         print(sess.run(net))
+        time.sleep(1) # Make this thread slow.
 
     coord.request_stop()
     print("stop requested.")

@@ -7,7 +7,7 @@ import tensorflow as tf
 
 def load_data():
     # custom it with your data loader here.
-    for i in range(100):
+    for i in range(10000):
         yield np.random.uniform(size=(5, 5))
 
 
