@@ -7,21 +7,23 @@ import tensorflow as tf
 
 def load_data():
     # custom it with your data loader here.
-    for i in xrange(10000):
-        yield np.random.uniform(size=(29))
+    for i in range(100):
+        yield np.random.uniform(size=(5, 5))
 
 
 class DataGenerator(object):
     def __init__(self,
                  coord,
-                 max_queue_size=32):
+                 max_queue_size=32,
+                 wait_time=0.01):
         # Change the shape of the input data here with the parameter shapes.
+        self.wait_time = wait_time
         self.max_queue_size = max_queue_size
-        self.queue = tf.FIFOQueue(max_queue_size, ['float32'], shapes=[29])
+        self.queue = tf.PaddingFIFOQueue(max_queue_size, ['float32'], shapes=[(None, None)])
         self.queue_size = self.queue.size()
         self.threads = []
         self.coord = coord
-        self.sample_placeholder = tf.placeholder(dtype=tf.float32, shape=[29])
+        self.sample_placeholder = tf.placeholder(dtype=tf.float32, shape=None)
         self.enqueue = self.queue.enqueue([self.sample_placeholder])
 
     def dequeue(self, num_elements):
@@ -36,10 +38,10 @@ class DataGenerator(object):
                 while self.queue_size.eval(session=sess) == self.max_queue_size:
                     if self.coord.should_stop():
                         break
-                    time.sleep(0.02)
+                    time.sleep(self.wait_time)
                 if self.coord.should_stop():
                     stop = True
-                    print("Process -1 receive stop request.")
+                    print("Enqueue thread receives stop request.")
                     break
                 sess.run(self.enqueue, feed_dict={self.sample_placeholder: data})
 

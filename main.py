@@ -9,7 +9,8 @@ def define_net(input_batch):
 
 
 def main():
-    batch_size = 2
+    batch_size = 1
+
     coord = tf.train.Coordinator()
     with tf.name_scope('create_inputs'):
         reader = DataGenerator(coord)
@@ -22,7 +23,7 @@ def main():
     threads = reader.start_threads(sess)
     net = define_net(input_batch)
     queue_size = reader.queue_size
-    for step in xrange(10000):
+    for step in range(100):
         print('size queue =', queue_size.eval(session=sess))
         print(sess.run(net))
 
