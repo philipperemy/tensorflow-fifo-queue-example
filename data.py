@@ -1,6 +1,6 @@
-import multiprocessing
 import threading
 import time
+
 import numpy as np
 import tensorflow as tf
 
@@ -47,7 +47,7 @@ class DataGenerator(object):
 
     def start_threads(self, sess, n_threads=1):
         for _ in range(n_threads):
-            thread = threading.Thread(target=self.thread_main, args=(sess, ))
+            thread = threading.Thread(target=self.thread_main, args=(sess,))
             thread.daemon = True  # Thread will close when parent quits.
             thread.start()
             self.threads.append(thread)

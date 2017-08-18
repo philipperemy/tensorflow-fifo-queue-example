@@ -29,7 +29,10 @@ def main():
     for step in range(10000):
         print('size queue =', queue_size.eval(session=sess))
         print(sess.run(net))
-        time.sleep(1) # Make this thread slow.
+
+        # Make this thread slow. You can comment this line. If you do so, you will dequeue
+        # faster than you enqueue, so expect the queue not to reach its maximum (32 by default)
+        time.sleep(1)
 
     coord.request_stop()
     print("stop requested.")
