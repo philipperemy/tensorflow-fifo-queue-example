@@ -23,20 +23,18 @@ def main():
     init = tf.global_variables_initializer()
     sess.run(init)
 
-    threads = tf.train.start_queue_runners(sess=sess, coord=coord)
-    reader.start_threads(sess)
-
+    threads = reader.start_threads(sess)
     net = define_net(input_batch)
-
-    for step in range(int(1e9)):
-        # The queue is filled faster than what the main thread can unstack.
-        # That's the reason why size of the queue is almost always equal to 32.
-        print('size queue =', sess.run(reader.size()))
+    queue_size = reader.queue_size
+    for step in range(10000):
+        print('size queue =', queue_size.eval(session=sess))
         print(sess.run(net))
-        time.sleep(3) # Make this thread slow.
+        time.sleep(1) # Make this thread slow.
 
     coord.request_stop()
-    coord.join(threads)
+    print("stop requested.")
+    for thread in threads:
+        thread.join()
 
 
 if __name__ == '__main__':
