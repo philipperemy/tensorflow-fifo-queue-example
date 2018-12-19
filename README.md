@@ -8,7 +8,7 @@ Compatible with Tensorflow 1.x. Please upgrade if you have Tensorflow 0.x.
 
 ## How to use it?
 
-```
+```bash
 git clone git@github.com:philipperemy/tensorflow-fifo-queue-example.git tf-queue
 cd tf-queue
 # make sure at least Tensorflow 1.0.1 is installed.
